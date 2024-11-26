@@ -28,6 +28,13 @@ jobs:
                 pip3 install flask --break-system-packages
                 nohup python3 main.py > output.log 2>&1 &
 
+  Lint:
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Super-linter
         uses: super-linter/super-linter@v7.2.0
         env:
