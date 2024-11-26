@@ -1,5 +1,5 @@
 name: Deploy Python Code
-on: [workflow_dispatch]
+on: [workflow_dispatch, pull_request]
 
 jobs:
   Build:
@@ -27,5 +27,15 @@ jobs:
             script: |
                 pip3 install flask --break-system-packages
                 nohup python3 main.py > output.log 2>&1 &
-    
 
+  Lint:
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Super-linter
+        uses: super-linter/super-linter@v7.2.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
